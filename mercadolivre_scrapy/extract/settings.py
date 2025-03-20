@@ -1,4 +1,4 @@
-# Scrapy settings for mercadolivre_scrapy project
+# Scrapy settings for extract project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,10 +7,10 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "mercadolivre_scrapy"
+BOT_NAME = "extract"
 
-SPIDER_MODULES = ["mercadolivre_scrapy.spiders"]
-NEWSPIDER_MODULE = "mercadolivre_scrapy.spiders"
+SPIDER_MODULES = ["extract.spiders"]
+NEWSPIDER_MODULE = "extract.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -45,13 +45,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    "mercadolivre_scrapy.middlewares.MercadolivreScrapySpiderMiddleware": 543,
+#    "extract.middlewares.MercadolivreScrapySpiderMiddleware": 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    "mercadolivre_scrapy.middlewares.MercadolivreScrapyDownloaderMiddleware": 543,
+#    "extract.middlewares.MercadolivreScrapyDownloaderMiddleware": 543,
 # }
 
 # Enable or disable extensions
@@ -63,7 +63,7 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    "mercadolivre_scrapy.pipelines.MercadolivreScrapyPipeline": 300,
+#    "extract.pipelines.MercadolivreScrapyPipeline": 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
