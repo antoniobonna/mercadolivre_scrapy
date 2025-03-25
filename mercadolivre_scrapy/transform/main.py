@@ -7,15 +7,12 @@ and stores the processed data in an SQLite database.
 Usage:
     python process_mercadolivre_data.py
 """
-import pandas as pd
+
 import sqlite3
 from datetime import datetime
 
-# File paths
-DATA_FILE_PATH = "../data/data.json"
-DB_FILE_PATH = "../data/data.db"
-TABLE_NAME = "mercadolivre"
-SOURCE_URL = "https://lista.mercadolivre.com.br/geladeira-frost-free"
+import pandas as pd
+
 
 def load_data(file_path: str) -> pd.DataFrame:
     """
@@ -31,6 +28,7 @@ def load_data(file_path: str) -> pd.DataFrame:
     df = pd.read_json(file_path)
     return df
 
+
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Preprocess the DataFrame by adding metadata and converting columns to appropriate types.
@@ -42,8 +40,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: Preprocessed DataFrame.
     """
     # Add metadata columns
-    df["_source"] = "https://lista.mercadolivre.com.br/geladeira-frost-free"
-    df["_crawled_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    df["source"] = "https://lista.mercadolivre.com.br/geladeira-frost-free"
+    df["crawled_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Convert price columns from string to float
     # Replace commas with dots for proper decimal formatting
@@ -57,6 +55,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     df["review_amount"] = pd.to_numeric(df["review_amount"], errors="coerce").astype("Int64")
 
     return df
+
 
 def save_to_database(df: pd.DataFrame, db_path: str, table_name: str) -> None:
     """
@@ -72,13 +71,14 @@ def save_to_database(df: pd.DataFrame, db_path: str, table_name: str) -> None:
         # Save the DataFrame to the database
         df.to_sql(table_name, conn, if_exists="replace", index=False)
 
+
 def main() -> None:
     """
     Main function to load, preprocess, and save data.
     """
     # Define file paths and table name
-    data_file_path = "../data/data.json"
-    db_file_path = "../data/data.db"
+    data_file_path = "../../data/data.json"
+    db_file_path = "../../data/data.db"
     table_name = "mercadolivre"
 
     # Load the data
@@ -89,6 +89,7 @@ def main() -> None:
 
     # Save the preprocessed data to the database
     save_to_database(df, db_file_path, table_name)
+
 
 if __name__ == "__main__":
     main()
