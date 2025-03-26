@@ -174,4 +174,6 @@ poetry.toml
 pyrightconfig.json
 
 gitdiff.bat
+.data/data.json
+.data/data.db
 # End of https://www.toptal.com/developers/gitignore/api/python
