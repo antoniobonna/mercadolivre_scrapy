@@ -6,21 +6,28 @@ Este projeto extrai dados do Mercado Livre usando Scrapy, transforma os dados e 
 ## 🧱 Estrutura do Projeto
 
 ```
-mercadolivre_scrapy/
-├── data/                      # Armazenamento de dados (ex: SQLite)
+MERCADOLIVRE_SCRAPY/
+├── .ruff_cache/                 
+├── data/
+│   └── data.db                  # Banco de dados SQLite
 ├── docs/
-│   └── mercadolivre_scrapy/
-│       └── dashboard/         # Frontend/backend do dashboard
-│       └── app.py             # Ponto de entrada da aplicação
-├── extract/
-│   ├── spiders/               # Spiders do Scrapy
-│   │   ├── mercadolivre.py    # Spider principal do Mercado Livre
-│   │   ├── items.py           # Definições dos items
-│   │   └── settings.py        # Configurações do Scrapy
-│   └── __init__.py
-├── transform/
-│   └── main.py                # Scripts de transformação
-├── tests/                     # Testes
+├── mercadolivre_scrapy/        # Pacote principal do projeto
+│   ├── dashboard/
+│   │   └── app.py               # Streamlit App
+│   ├── extract/
+│   │   ├── __init__.py
+│   │   ├── items.py             # Definições dos items Scrapy
+│   │   ├── settings.py          # Configurações do Scrapy
+│   │   └── spiders/
+│   │       ├── __init__.py
+│   │       └── mercadolivre.py  # Spider principal
+│   ├── transform/
+│   │   ├── __init__.py
+│   │   └── main.py              # Script de transformação
+├── tests/                       # Testes automatizados
+├── scrapy.cfg                   # Configuração principal do Scrapy
+├── .gitignore
+├── gitdiff.bat
 ├── poetry.lock
 ├── pyproject.toml
 └── README.md
