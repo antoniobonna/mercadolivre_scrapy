@@ -77,4 +77,52 @@ class MercadolivreSpider(scrapy.Spider):
             if next_page is not None:
                 self.page_count += 1
                 # Follow the next page and recursively call the parse method
-                yield response.follow(next_page, callback=self.parse)
+                yield response.follow(next_page, callback=self.parse_next_pages)
+
+    def parse_next_pages(self, response):
+        """
+        Parse product information from MercadoLivre search results page.
+
+        Args:
+            response (scrapy.http.Response): HTTP response from the website
+
+        Yields:
+            dict: Product information including brand, name, pricing, and reviews
+            scrapy.Request: Request to the next page if available and within limits
+        """
+        # Select all product containers on the page
+        products = response.css("div.ui-search-result__wrapper")
+
+        # Extract data for each product
+        for product in products:
+            yield {
+                "brand": product.css(
+                    "span.ui-search-item__brand-discoverability.ui-search-item__group__element::text"
+                ).get(),
+                "name": product.css(
+                    "h2.ui-search-item__title.ui-search-item__group__element a::text"
+                ).get(),
+                "old_price": product.css(
+                    "s.andes-money-amount span.andes-money-amount__fraction::text"
+                ).get(),
+                "new_price": product.css(
+                    "div.ui-search-price__second-line span.andes-money-amount__fraction::text"
+                ).get(),
+                "review_rating_number": product.css(
+                    "span.ui-search-reviews__rating-number::text"
+                ).get(),
+                "review_amount": (
+                    product.css("span.ui-search-reviews__amount::text").get(default="0") or "0"
+                ).strip("()"),  # Ensures `None` does not cause an error
+            }
+
+        # Check if the maximum number of pages has been reached
+        if self.page_count < self.max_pages:
+            next_page = response.css(
+                "li.andes-pagination__button.andes-pagination__button--next a::attr(href)"
+            ).get()
+            # Extract the URL for the next page
+            if next_page is not None:
+                self.page_count += 1
+                # Follow the next page and recursively call the parse method
+                yield response.follow(next_page, callback=self.parse_next_pages)

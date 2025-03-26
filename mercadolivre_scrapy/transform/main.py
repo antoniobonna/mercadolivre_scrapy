@@ -39,6 +39,9 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Preprocessed DataFrame.
     """
+    # Remove rows where brand is nan
+    df = df.dropna(subset=["brand"]).reset_index(drop=True)
+
     # Add metadata columns
     df["source"] = "https://lista.mercadolivre.com.br/geladeira-frost-free"
     df["crawled_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -47,7 +50,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     # Replace commas with dots for proper decimal formatting
     price_columns = ["new_price", "old_price"]
     for col in price_columns:
-        df[col] = df[col].astype(str).str.replace(",", ".", regex=False)
+        df[col] = df[col].astype(str).str.replace(".", "", regex=False)
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
     # Convert review columns to appropriate types
