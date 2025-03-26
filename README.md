@@ -49,8 +49,8 @@ poetry install
 ### Executar o Spider
 
 ```bash
-cd extract
-scrapy crawl mercadolivre
+cd mercadolivre_scrapy
+scrapy crawl mercadolivre -o ../data/data.json
 ```
 
 ### Transformar os Dados
@@ -63,8 +63,8 @@ python main.py
 ### Rodar o App
 
 ```bash
-cd docs/mercadolivre_scrapy
-python app.py
+cd ../dashboard
+streamlit run app.py
 ```
 
 ## 🧪 Testes
